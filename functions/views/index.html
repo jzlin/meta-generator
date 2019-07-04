@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meta Generator</title>
+</head>
+<body>
+  <h1>Meta Generator</h1>
+  <input type="text" id="url" name="url" placeholder="url">
+  <br>
+  <br>
+  <textarea id="metaNames" name="metaNames" placeholder="metaNames" cols="100" rows="12">
+{
+  "og:url": ""
+}
+  </textarea>
+  <br>
+  <br>
+  <textarea id="metaProperties" name="metaProperties" placeholder="metaProperties" cols="100" rows="12">
+{
+  "og:type": "website",
+  "og:title": "",
+  "og:description": "",
+  "og:image": "",
+  "og:image:width": "",
+  "og:image:height": "",
+  "fb:app_id": ""
+}
+  </textarea>
+  <br>
+  <br>
+  <button id="generatorButton">get link</button>
+  <br>
+  <br>
+  <a id="link"></a>
+  <script>
+    (function() {
+      const urlEle = document.getElementById('url');
+      const metaNamesEle = document.getElementById('metaNames');
+      const metaPropertiesEle = document.getElementById('metaProperties');
+      const btnEle = document.getElementById('generatorButton');
+      const linkEle = document.getElementById('link');
+      btnEle.onclick = function() {
+        const urlStr = encodeURIComponent(
+          encodeURIComponent(urlEle.value)
+        );
+        const metaNamesStr = encodeURIComponent(
+          encodeURIComponent(
+            JSON.stringify(
+              JSON.parse(metaNamesEle.value)
+            )
+          )
+        );
+        const metaPropertiesStr = encodeURIComponent(
+          encodeURIComponent(
+            JSON.stringify(
+              JSON.parse(metaPropertiesEle.value)
+            )
+          )
+        );
+        const linkStr = urlStr ? `${location.origin}/${urlStr}/${metaNamesStr}/${metaPropertiesStr}` : '';
+        linkEle.setAttribute('href', linkStr);
+        linkEle.innerText = linkStr;
+      };
+    })();
+  </script>
+</body>
+</html>
